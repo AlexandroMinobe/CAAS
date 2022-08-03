@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  API: 'https://api.thecatapi.com/v1/images/search?',
+  APIKEY: 'bbfb9720-852d-4a25-baca-4acaae50facd'
 };
 
 /*
