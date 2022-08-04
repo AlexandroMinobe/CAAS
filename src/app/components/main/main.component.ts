@@ -1,4 +1,4 @@
-import { IBreeds, ICats } from './../../interfaces/placeholder.model';
+import { IBreeds, ICats, IFavouriteCat } from './../../interfaces/placeholder.model';
 import { CrudService } from './../../services/crud.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,10 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
   breeds!: IBreeds[] 
-  cats!: ICats[]
+  cats: ICats[] = []
   error!: any
+  favouritedCats: IFavouriteCat[] = []
+
   constructor(private crudService: CrudService) {
-    this.getterCats();
+    this.getterBreeds();
+    this.getterFavourites();
    }
   
   ngOnInit(): void {
@@ -40,8 +43,23 @@ export class MainComponent implements OnInit {
       console.log(i)
       i++
     }
-    console.log(this.breeds)
 
+    })
+  }
+
+  getterFavourites(){
+    this.crudService.getFavouritedCats().subscribe((data:any)=>{
+      this.favouritedCats = data
+      console.log("getitnf favourites")
+      console.log(this.favouritedCats)
+    })
+  }
+
+
+
+  favouriteCat(id:string){
+    this.crudService.favouriteCat(id, 'user-123').subscribe((data:any) =>{
+      this.getterFavourites()
     })
   }
 

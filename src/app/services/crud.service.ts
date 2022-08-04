@@ -19,4 +19,23 @@ export class CrudService {
   public getBreeds (): Observable<any>{
     return this.request.get(`${environment.API}/breeds`);
   }
+
+  public getFavouritedCats (): Observable<any>{
+    return this.request.get(`${environment.API}/favourites?limit=20&sub_id=user-123&order=DESC`,
+    {
+      headers:  { 'x-api-key': environment.APIKEY}
+    }
+    )
+  }
+
+  public favouriteCat(image_id:string, sub_id: string): Observable<any>{
+    const favourite = {
+      image_id:image_id,
+      sub_id:sub_id
+    }
+    return this.request.post(`${environment.API}/favourites`, favourite,
+    {
+      headers:  { 'x-api-key': environment.APIKEY}
+    })
+  }
 }
