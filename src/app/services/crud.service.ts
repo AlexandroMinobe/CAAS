@@ -28,6 +28,10 @@ export class CrudService {
     )
   }
 
+  public getCat(image_id:string):Observable<any>{
+    return this.request.get(`${environment.API}/images/${image_id}`)
+  }
+
   public favouriteCat(image_id:string, sub_id: string): Observable<any>{
     const favourite = {
       image_id:image_id,

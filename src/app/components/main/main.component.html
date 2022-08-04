@@ -1,19 +1,41 @@
-
 <div class="cards-container">
-    <div *ngFor="let breed of breeds" class="card">
-        <h1>{{breed.name}}</h1><br>
+    <mat-card *ngFor="let breed of breeds" class="card">
+        <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>{{breed.name}}</mat-card-title>
+            <mat-card-subtitle>{{breed.origin}}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="{{breed.image.url}}" alt="Photo of a {{breed.name}}">
+        <mat-card-content>
+            <p>
+                {{breed.description}}
+            </p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button (click)="favouriteCat(breed.image.id)">Favoritar</button>
+            <button mat-button>SHARE</button>
+        </mat-card-actions>
+    </mat-card>
+
+
+
+    <!-- <div >
+        <h1></h1><br>
         <img src="{{breed.image.url}}" alt="">
         <p>{{breed.description}}</p>
         <button (click)="favouriteCat(breed.image.id)">Favoritar</button>
         <a>Ler mais</a>
-    </div>
+    </div> -->
 </div>
+<!-- 
 <br><br><br>
 <div>
     <div *ngFor="let favourite of favouritedCats">
         <img src="{{favourite.image.url}}" alt="">
     </div>
-</div>
+</div> -->
+
+
 <!-- 
 <div class="cards-container">
     <div *ngFor="let cat of cats" class="card">

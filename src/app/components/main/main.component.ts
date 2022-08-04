@@ -8,24 +8,33 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  breeds!: IBreeds[] 
+  breeds: IBreeds[]  = []
   cats: ICats[] = []
-  error!: any
+  error: any
   favouritedCats: IFavouriteCat[] = []
+  info: any
 
   constructor(private crudService: CrudService) {
     this.getterBreeds();
     this.getterFavourites();
+    // this.getterCat();
    }
   
   ngOnInit(): void {
 
   }
 
-  getterCats() {
+  getterCat():void{
+    console.log("favs:", this.favouritedCats)
+    this.crudService.getCat(this.favouritedCats[0].image_id).subscribe((data:any)=>{
+      this.info = data
+      console.log(this.info)
+    })
+  }
+
+  getterCats():void {
     this.crudService.getCats().subscribe((data:ICats[]) => {console.log("catas")
     this.cats = data
-    console.log("catas")
     }, 
     (error:any) => {
       this.error = error
@@ -33,11 +42,9 @@ export class MainComponent implements OnInit {
     })
   }
 
-  getterBreeds(){
+  getterBreeds():void{
     this.crudService.getBreeds().subscribe((data:IBreeds[])=> {
     let i = 0
-    this.breeds = []
-    console.log("asdsa")
     while (i < 10){
       this.breeds.push(data[i])
       console.log(i)
@@ -47,17 +54,18 @@ export class MainComponent implements OnInit {
     })
   }
 
-  getterFavourites(){
+  getterFavourites():void{
     this.crudService.getFavouritedCats().subscribe((data:any)=>{
       this.favouritedCats = data
-      console.log("getitnf favourites")
       console.log(this.favouritedCats)
+      this.getterCat()
     })
+    
   }
 
 
 
-  favouriteCat(id:string){
+  favouriteCat(id:string):void{
     this.crudService.favouriteCat(id, 'user-123').subscribe((data:any) =>{
       this.getterFavourites()
     })
